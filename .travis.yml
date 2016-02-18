@@ -2,7 +2,7 @@ language: c
 
 before_install:
   - wget "http://nginx.org/download/nginx-1.9.10.tar.gz"
-  - tar zxf nginx-1.9.10.tar.gz
+  - tar --strip-components=1 -zxf nginx-1.9.10.tar.gz
 
 script:
   - ./configure --add-module=nginx-reponsive --without-http_rewrite_module
