@@ -4,7 +4,7 @@
 
 static char* ngx_http_responsive(ngx_conf_t* cf, ngx_command_t* cmd, void* conf);
 
-static char* ngx_reponsive_string = "test";
+static u_char* ngx_responsive_string = (u_char*)"test";
 
 static ngx_command_t ngx_http_responsive_commands[] = {
 	{
@@ -28,7 +28,7 @@ static ngx_http_module_t ngx_http_responsive_ctx = {
 	NULL,	//merge location configuration
 };
 
-ngx_http_module_t ngx_http_responsive_module = {
+ngx_module_t ngx_http_responsive_module = {
 	NGX_MODULE_V1,
 	&ngx_http_responsive_ctx,		//module context
 	ngx_http_responsive_commands,	//module directives

@@ -24,31 +24,31 @@ static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 
 	r->headers_out.content_type_len = sizeof("text/html") - 1;
 	r->headers_out.content_type.len = sizeof("text/html") - 1;
-	r->headers_out.content_type.date = (u_cahr*)"text/html";
+	r->headers_out.content_type.data = (u_char*)"text/html";
 
 	if (r->method == NGX_HTTP_HEAD)
 	{
 		r->headers_out.status = NGX_HTTP_OK;
-		r->headers_out.content_length_n = sizeof(ngx_reponsive_string) - 1;
+		r->headers_out.content_length_n = sizeof(ngx_responsive_string) - 1;
 		return ngx_http_send_header(r);
 	}
 
 	b = ngx_pcalloc(r->pool, sizeof(ngx_buf_t));
 	if (b == NULL)
 	{
-		return NGX_HEEP_INTERNAL_SERVER_ERROR;
+		return NGX_HTTP_INTERNAL_SERVER_ERROR;
 	}
 
 	out.buf = b;
 	out.next = NULL;
 
-	b->pos = ngx_reponsive_string;
-	b->last = ngx_reponsive_string + sizeof(ngx_fun_string) - 1;
+	b->pos = ngx_responsive_string;
+	b->last = ngx_responsive_string + sizeof(ngx_responsive_string) - 1;
 	b->memory = 1;
 	b->last_buf = 1;
 
 	r->headers_out.status = NGX_HTTP_OK;
-	r->headers_out.content_length_n = sizeof(ngx_fun_string) - 1;
+	r->headers_out.content_length_n = sizeof(ngx_responsive_string) - 1;
 
 	rc = ngx_http_send_header(r);
 
@@ -63,7 +63,7 @@ static char* ngx_http_responsive(ngx_conf_t* cf, ngx_command_t* cmd, void* conf)
 {
 	ngx_http_core_loc_conf_t*	clcf;
 
-	clcf = ngx_http_conf_get_module_loc_conf(cf, ngx_http_code_module);
+	clcf = ngx_http_conf_get_module_loc_conf(cf, ngx_http_core_module);
 	clcf->handler = ngx_http_responsive_handler;
 
 	return NGX_CONF_OK;
