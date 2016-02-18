@@ -3,8 +3,7 @@
 #define NGX_HTTP_RESPONSIVE_MODULE_H
 
 static char* ngx_http_responsive(ngx_conf_t* cf, ngx_command_t* cmd, void* conf);
-
-static u_char* ngx_responsive_string = (u_char*)"test";
+static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r);
 
 static ngx_command_t ngx_http_responsive_commands[] = {
 	{

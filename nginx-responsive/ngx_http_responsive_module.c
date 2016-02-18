@@ -4,6 +4,17 @@
 
 #include "ngx_http_responsive_module.h"
 
+static u_char* ngx_responsive_string = (u_char*)"test";
+
+static char* ngx_http_responsive(ngx_conf_t* cf, ngx_command_t* cmd, void* conf)
+{
+	ngx_http_core_loc_conf_t*	clcf;
+
+	clcf = ngx_http_conf_get_module_loc_conf(cf, ngx_http_core_module);
+	clcf->handler = ngx_http_responsive_handler;
+
+	return NGX_CONF_OK;
+}
 
 static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 {
@@ -59,14 +70,6 @@ static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 	return ngx_http_output_filter(r, &out);
 }
 
-static char* ngx_http_responsive(ngx_conf_t* cf, ngx_command_t* cmd, void* conf)
-{
-	ngx_http_core_loc_conf_t*	clcf;
 
-	clcf = ngx_http_conf_get_module_loc_conf(cf, ngx_http_core_module);
-	clcf->handler = ngx_http_responsive_handler;
-
-	return NGX_CONF_OK;
-}
 
 
