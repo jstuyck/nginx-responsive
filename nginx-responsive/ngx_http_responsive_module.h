@@ -4,7 +4,7 @@
 
 static char* ngx_http_responsive(ngx_conf_t* cf, ngx_command_t* cmd, void* conf);
 
-static u_char* ngx_reponsive_string = "test";
+static char* ngx_reponsive_string = "test";
 
 static ngx_command_t ngx_http_responsive_commands[] = {
 	{
