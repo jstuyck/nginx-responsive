@@ -6,4 +6,4 @@ before_install:
 
 script:
   - ./configure --add-module=nginx-responsive --without-http_rewrite_module
-  - make && make test
+  - make

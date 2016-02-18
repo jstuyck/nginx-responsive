@@ -8,7 +8,7 @@ static u_char* ngx_responsive_string = (u_char*)"test";
 
 static ngx_command_t ngx_http_responsive_commands[] = {
 	{
-		ngx_string("fun"),
+		ngx_string("responsive"),
 		NGX_HTTP_LOC_CONF|NGX_CONF_NOARGS,
 		ngx_http_responsive,
 		0,0,
