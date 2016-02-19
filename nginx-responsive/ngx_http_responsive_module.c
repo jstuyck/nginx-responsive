@@ -50,9 +50,6 @@ static void*	ngx_http_responsive_create_loc_conf(ngx_conf_t*	cf)
 
 static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 {
-	
-	ngx_chain_t	out;
-	
 	u_char	*last;
 	//u_char	*filename;
 	size_t	root;
@@ -101,9 +98,12 @@ static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 
 
 
-static ngx_buf_t *ngx_http_responsive_compress(ngx_http_request_t *r,ngx_str_t path, int sizex, int sizey)
+static ngx_buf_t *ngx_http_responsive_compress(ngx_http_request_t *r,ngx_str_t *path, int sizex, int sizey)
 {
+	size_t		len;
+	ngx_buf_t	*b;
 
+	len = sizeof("</pre><hr>") - 1;
 
 	b = ngx_create_temp_buf(r->pool, len);
 	if (b == NULL) {

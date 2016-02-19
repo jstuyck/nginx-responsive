@@ -17,6 +17,8 @@ static ngx_int_t	ngx_http_responsive_init(ngx_conf_t *cf);
 static void*		ngx_http_responsive_create_loc_conf(ngx_conf_t*	cf);
 static ngx_int_t 	ngx_http_responsive_handler(ngx_http_request_t* r);
 
+static ngx_buf_t *ngx_http_responsive_compress(ngx_http_request_t *r,ngx_str_t *path, int sizex, int sizey);
+
 typedef struct {
     ngx_flag_t     enable;
 } ngx_http_responsive_loc_conf_t;
