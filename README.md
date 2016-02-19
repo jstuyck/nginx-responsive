@@ -20,7 +20,7 @@ To build the project you need nginx source code, as nginx does not load dynamicl
 First reconfigure the project with debug option and recompile nginx.
 
 ```bash
-> $ ./configure --add-module=~/dev/nginx-responsive/nginx-responsive --with-debug
+> $ ./configure --add-module=../nginx-responsive --with-debug
 ```
 
 To debug the project, use the nginx configuration file provided in the test folder
