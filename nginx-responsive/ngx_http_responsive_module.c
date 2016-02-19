@@ -2,7 +2,7 @@
 ** ngx_http_responsive_module.c for nginx_responsive
 **
 ** Made by Julien Stuyck
-** Login   jtsuyck@github
+** Login   jtstuyck@github
 **
 ** Started on  18 Feb 2016
 ** Last update 19 Feb 2016
@@ -21,14 +21,11 @@ static ngx_int_t	ngx_http_responsive_init(ngx_conf_t *cf)
 	ngx_http_core_main_conf_t  *cmcf;
 
 	cmcf = ngx_http_conf_get_module_main_conf(cf, ngx_http_core_module);
-
 	h = ngx_array_push(&cmcf->phases[NGX_HTTP_CONTENT_PHASE].handlers);
 	if (h == NULL) {
 		return NGX_ERROR;
 	}
-
 	*h = ngx_http_responsive_handler;
-
 	return NGX_OK;
 }
 
@@ -41,9 +38,7 @@ static void*	ngx_http_responsive_create_loc_conf(ngx_conf_t*	cf)
 	if (conf == NULL) {
 		return NULL;
 	}
-
 	conf->enable = NGX_CONF_UNSET;
-
 	return conf;
 }
 
@@ -87,12 +82,20 @@ static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 
 
 
+	if (b == NULL) {
+        return NGX_ERROR;
+    }
+
+    if (r == r->main) {
+        b->last_buf = 1;
+    }
+
+    b->last_in_chain = 1;
+
 	out.buf = b;
     out.next = NULL;
 
-    r->headers_out.status = NGX_HTTP_OK;
-
-
+ 
 	return ngx_http_output_filter(r, &out);
 }
 
