@@ -12,7 +12,7 @@ This module optimize image delivery depending on the device that request the ima
 To build the project you need nginx source code, as nginx does not load dynamicly libraries.
 
 ```bash
-> $ ./configure --add-module=~/dev/nginx-responsive/nginx-responsive
+> $ ./configure --add-module=../nginx-responsive
 ```
 
 ## debug
