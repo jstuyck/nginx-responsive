@@ -5,5 +5,5 @@ before_install:
   - tar --strip-components=1 -zxf nginx-1.9.10.tar.gz
 
 script:
-  - ./configure --add-module=nginx-responsive --without-http_rewrite_module
+  - ./configure --add-module=nginx-responsive --without-http_rewrite_module --with-debug
   - make
