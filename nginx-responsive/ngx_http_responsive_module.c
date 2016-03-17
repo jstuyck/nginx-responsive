@@ -14,6 +14,7 @@
 
 #include "ngx_http_responsive_module.h"
 
+#define DEBUG
 
 static ngx_int_t	ngx_http_responsive_init(ngx_conf_t *cf)
 {
@@ -47,17 +48,39 @@ static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 {
 	u_char	*last;
 	//u_char	*filename;
+	u_char                     *ua;
+	size_t                      len;
+   
 	size_t	root;
-
+	u_char*							ext;
 	ngx_chain_t 					out;
 	ngx_str_t 						path;
 	ngx_buf_t						*b;
 	ngx_http_responsive_loc_conf_t 	*locconf;
+	ngx_uint_t                      i,j;
 
+	ext = NULL;
 
-	if (r->uri.data[r->uri.len - 1] != '/') {
+	i = r->uri.len - 1;
+
+	while (i > 0 && r->uri.data[i--] != '/');
+	
+	if (i != 0)
+		while (r->uri.data[i++] != '.');
+	else
 		return NGX_DECLINED;
-	}
+
+	for (j=0; j < NB_EXT_ELMT; j++)
+		if (ngx_strncasecmp(&r->uri.data[i],exts[j].data,sizeof(exts[j])))
+		{
+			ext = ngx_cpymem(ext,exts[j].data,sizeof(exts[j]));
+			break;
+		}
+
+	if (ext == NULL)
+		return NGX_DECLINED;
+
+	
 
 	if (!(r->method & (NGX_HTTP_GET|NGX_HTTP_HEAD))) {
 		return NGX_DECLINED;
@@ -78,6 +101,12 @@ static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 	ngx_log_debug1(NGX_LOG_DEBUG_HTTP, r->connection->log, 0, "http responsive: \"%s\"", path.data);
 
 
+	//get the user agent name
+	ua = r->headers_in.user_agent->value.data;
+    len = r->headers_in.user_agent->value.len;
+
+
+
 	b = ngx_http_responsive_compress(r, &path, 10,10);
 
 
@@ -94,6 +123,13 @@ static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 
 	out.buf = b;
     out.next = NULL;
+
+
+    r->headers_out.status = NGX_HTTP_OK;
+    r->headers_out.content_length_n = sizeof("</pre><hr>");
+    r->headers_out.content_type.len = sizeof("image/gif") - 1;
+    r->headers_out.content_type.data = (u_char *) "image/gif";
+    ngx_http_send_header(r);
 
  
 	return ngx_http_output_filter(r, &out);

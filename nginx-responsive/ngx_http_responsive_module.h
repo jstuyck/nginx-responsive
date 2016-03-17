@@ -11,7 +11,7 @@
 #ifndef NGX_HTTP_RESPONSIVE_MODULE_H
 #define NGX_HTTP_RESPONSIVE_MODULE_H
 
-
+#define NB_EXT_ELMT 4
 
 static ngx_int_t	ngx_http_responsive_init(ngx_conf_t *cf);
 static void*		ngx_http_responsive_create_loc_conf(ngx_conf_t*	cf);
@@ -60,5 +60,29 @@ ngx_module_t ngx_http_responsive_module = {
 	NULL,							//exit master
 	NGX_MODULE_V1_PADDING
 };
+
+
+typedef struct {
+    u_char                      devicename[25];
+    size_t                      resw;
+    size_t                      resh;
+    size_t                      dpi;
+} ngx_http_responsive_devices_t;
+
+
+static ngx_http_responsive_devices_t ngx_http_responsive_devices_list[] = {
+    { "iphone",
+      0,
+      1,
+      22}
+  };
+
+
+static const ngx_str_t exts[] = {
+ ngx_string("bmp"),
+ ngx_string("jpeg"),
+ ngx_string("jpg"),
+ ngx_string("png") 
+ };
 
 #endif
