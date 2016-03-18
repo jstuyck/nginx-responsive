@@ -48,9 +48,11 @@ static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 {
 	u_char	*last;
 	//u_char	*filename;
-	u_char                     *ua;
-	size_t                      len;
-   
+	//u_char                     *ua;
+	//size_t                      len;
+   	ngx_str_t ua;
+
+
 	size_t	root;
 	u_char*							ext;
 	ngx_chain_t 					out;
@@ -80,7 +82,6 @@ static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 	if (ext == NULL)
 		return NGX_DECLINED;
 
-	
 
 	if (!(r->method & (NGX_HTTP_GET|NGX_HTTP_HEAD))) {
 		return NGX_DECLINED;
@@ -102,9 +103,8 @@ static ngx_int_t ngx_http_responsive_handler(ngx_http_request_t* r)
 
 
 	//get the user agent name
-	ua = r->headers_in.user_agent->value.data;
-    len = r->headers_in.user_agent->value.len;
-
+    ngx_cpystrn(ua.data,r->headers_in.user_agent->value.data,r->headers_in.user_agent->value.len);
+    ua.len = r->headers_in.user_agent->value.len;
 
 
 	b = ngx_http_responsive_compress(r, &path, 10,10);

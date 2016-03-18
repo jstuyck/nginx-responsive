@@ -69,14 +69,14 @@ typedef struct {
     size_t                      dpi;
 } ngx_http_responsive_devices_t;
 
-
+/*
 static ngx_http_responsive_devices_t ngx_http_responsive_devices_list[] = {
     { "iphone",
       0,
       1,
       22}
   };
-
+*/
 
 static const ngx_str_t exts[] = {
  ngx_string("bmp"),
